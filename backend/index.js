@@ -5,8 +5,7 @@ const cors = require('cors');
 const connectDB = require('./models/db');
 const authRoutes = require('./routes/authRoutes');
 const adminRoutes = require("./routes/adminRoutes");
-const productRoutes = require("./routes/productsRoutes");
-const orderRoutes = require("./routes/ordersRoutes");
+const customerRoutes = require("./routes/customerRoutes");
 const riderRoutes = require("./routes/riderRoutes");
 
 
@@ -28,9 +27,8 @@ app.get("/", (req,res)=>{
 });
 
 app.use("/api/v1/auth",authRoutes);
+app.use("/api/v1/customer", customerRoutes);
 app.use("/api/v1/admin", adminRoutes);
-app.use("/api/v1/products", productRoutes);
-app.use("/api/v1/orders", orderRoutes);
 app.use("/api/v1/rider", riderRoutes);
 
 

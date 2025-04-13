@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-
-router.get("/", (req,res)=>{
-    return res.json({
-        message:"rider routes are working!"
-    })
-});
+const {authMiddleware, requireRole}=require('../middlewares/authMiddleware');
+const riderController = require("../controllers/riderController");
 
 
-module.exports=router;1
+router.get("/profile", authMiddleware, requireRole(['rider']), riderController.getProfile);
+router.get("/orders", authMiddleware, requireRole(['rider']), riderController.getAssignedOrders);
+router.put("/orders/:id/status", authMiddleware, requireRole(['rider']), riderController.updateOrderStatus);
+
+
+module.exports=router;
