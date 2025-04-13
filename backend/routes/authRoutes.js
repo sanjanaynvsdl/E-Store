@@ -1,11 +1,11 @@
 const express = require('express');
+const authController = require("../controllers/authController")
 
 const router = express.Router();
+router.post("/user/signin", authController.userSignIn);
+router.post("/rider/signin", authController.riderSignIn);
 
-// router.post("/signin", authController.signin);
-router.get("/", (req,res)=>{
-    res.send("cool_auth routes are working!!")
-});
+
 
 
 module.exports=router;

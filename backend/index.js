@@ -1,8 +1,8 @@
 require("dotenv").config();
 const express = require('express');
 const cors = require('cors');
-const connectDB = require('./models/db');
 
+const connectDB = require('./models/db');
 const authRoutes = require('./routes/authRoutes');
 const adminRoutes = require("./routes/adminRoutes");
 const productRoutes = require("./routes/productsRoutes");
@@ -29,12 +29,15 @@ app.get("/", (req,res)=>{
 
 app.use("/api/v1/auth",authRoutes);
 app.use("/api/v1/admin", adminRoutes);
-app.use("/api/v1/product", productRoutes);
-app.use("/api/v1/order", orderRoutes);
+app.use("/api/v1/products", productRoutes);
+app.use("/api/v1/orders", orderRoutes);
 app.use("/api/v1/rider", riderRoutes);
 
 
-app.listen(3000,()=>(
+app.listen(3000,()=>{
     console.log("Server is listening to port 3000")
-));
+});
+
+
+
 
