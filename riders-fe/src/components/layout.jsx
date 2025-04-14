@@ -1,13 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/auth-context';
-import { useCart } from '../../context/cart-context';
+import { useAuth } from '../context/auth-context';
 import { signOut } from 'firebase/auth';
-import { auth } from '../../firebase/config';
+import { auth } from '../utils/firebase/config';
 import { useState, useRef, useEffect } from 'react';
 
-export default function CustomerLayout({ children }) {
+export default function Layout({ children }) {
   const { currentUser } = useAuth();
-  const { getTotalItems } = useCart();
+  
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
@@ -23,11 +22,7 @@ export default function CustomerLayout({ children }) {
       console.error('Logout failed:', error);
     }
   };
-  
-  const handleAccountDetails = () => {
-    setDropdownOpen(false);
-    navigate('/account');
-  };
+
   
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -47,24 +42,14 @@ export default function CustomerLayout({ children }) {
     <div className="min-h-screen bg-light-gray">
       {/* Customer Navbar - Fixed */}
       <nav className="bg-deep-navy text-white fixed top-0 left-0 right-0 z-50 shadow-md">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="container mx-auto px-8 md:px-24 py-4 flex justify-between items-center">
+          <div>
           <Link to="/products" className="text-xl font-bold text-mustard-yellow outline-none">E-Store</Link>
+          <span className="text-sm text-gray-400 hidden md:inline px-4">(Riders Panel)</span>
+          </div>
           
          
           <div className="flex items-center gap-4">
-            
-            {/* Cart icon with counter */}
-            <Link to="/cart" className="relative mr-2">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-              {getTotalItems() > 0 && (
-                <span className="absolute -top-2 -right-2 bg-mustard-yellow text-deep-navy text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                  {getTotalItems()}
-                </span>
-              )}
-            </Link>
-            
             {currentUser && (
               <div className="relative" ref={dropdownRef}>
                 <div 
@@ -93,15 +78,6 @@ export default function CustomerLayout({ children }) {
                 {/* Dropdown menu */}
                 {dropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
-                    <button
-                      onClick={handleAccountDetails}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                      </svg>
-                      Account Details
-                    </button>
                     <button
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"

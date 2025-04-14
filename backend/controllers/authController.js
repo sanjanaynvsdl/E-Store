@@ -76,6 +76,7 @@ const riderSignIn = async (req, res) => {
                 name: rider.name,
                 email: rider.email
             },
+            role:"rider",
             token:token
         });
     } catch (err) {

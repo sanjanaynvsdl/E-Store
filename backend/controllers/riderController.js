@@ -59,6 +59,35 @@ const getAssignedOrders = async (req, res) => {
   }
 };
 
+// get order by ID
+const getOrderById = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id)
+      .populate("user_id", "name email address phone")
+      .populate("items.product_id")
+      .populate("rider_id", "name email orderCount");
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    return res.status(200).json({ 
+        message: "Order fetched successfully!", 
+        order: order 
+    });
+
+  } catch (error) {
+
+    console.error("Internal server error in fetching order:", error);
+
+    return res.status(500).json({ 
+        message: "Internal server error!", 
+        error: error.message 
+    });
+  }
+};
+
+
 
 // update order_staus, 
 const updateOrderStatus = async (req, res) => {
@@ -103,5 +132,6 @@ const updateOrderStatus = async (req, res) => {
 module.exports = {
   getProfile,
   getAssignedOrders,
-  updateOrderStatus
+  updateOrderStatus,
+  getOrderById
 };

@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+:root {
+    --color-black: #000000;
+    --color-deep-navy: #14213D;
+    --color-mustard-yellow: #FDD16A;
+    --color-light-gray: #E5E5E5;
+    --color-white: #FFFFFF;
+  }
+  
+  /* Apply custom colors to Tailwind classes */
+  .bg-deep-navy {
+    background-color: var(--color-deep-navy);
+  }
+  
+  .bg-mustard-yellow {
+    background-color: var(--color-mustard-yellow);
+  }
+  
+  .bg-light-gray {
+    background-color: var(--color-light-gray);
+  }
+  
+  .text-deep-navy {
+    color: var(--color-deep-navy);
+  }
+  
+  .text-mustard-yellow {
+    color: var(--color-mustard-yellow);
+  }
+  
+  .text-light-gray {
+    color: var(--color-light-gray);
+  }
+  
+  .border-mustard-yellow {
+    border-color: var(--color-mustard-yellow);
+  }
+  
+  .border-light-gray {
+    border-color: var(--color-light-gray);
+  }
+  
+  /* Base styles */
+  body {
+    font-family: 'Inter', 'Roboto', sans-serif;
+    color: var(--color-black);
+    background-color: var(--color-light-gray);
+  }
+  
+  /* Transition effects */
+  .transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
