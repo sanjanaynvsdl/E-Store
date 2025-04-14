@@ -40,7 +40,7 @@ const approvedEmail = async (req, res) => {
 };
 
 
-// 🛠️ Create a product
+// Create a product
 const createProducts = async (req, res) => {
 
   try {

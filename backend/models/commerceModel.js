@@ -16,10 +16,20 @@ const productSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  imageUrl: {
-    type: String,
-    trim: true
-  },
+  imagesByColor: [
+    {
+      color: {
+        type: String,
+        required: true,
+        trim: true
+      },
+      imageUrl: {
+        type: String,
+        required: true,
+        trim: true
+      }
+    }
+  ],
   sizes: [String],
   colors: [String],
   variants: [

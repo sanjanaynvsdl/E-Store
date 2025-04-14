@@ -19,13 +19,13 @@ app.use(express.json());
 connectDB();
 
 
-//routes
 app.get("/", (req,res)=>{
     res.json({
         message:"Gtg!"
     })
 });
 
+//routes
 app.use("/api/v1/auth",authRoutes);
 app.use("/api/v1/customer", customerRoutes);
 app.use("/api/v1/admin", adminRoutes);

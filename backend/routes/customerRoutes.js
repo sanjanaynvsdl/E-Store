@@ -7,12 +7,12 @@ const router = express.Router();
 
 
 //products listed once customer login's
-router.post("/products", authMiddleware,requireRole(['customer']), customerController.getAllProducts);
-router.post("/products/:id", authMiddleware, requireRole(['customer'], customerController.getProductById));
+router.get("/products", authMiddleware,requireRole(['customer']), customerController.getAllProducts);
+router.get("/products/:id", authMiddleware, requireRole(['customer']), customerController.getProductById);
 
 
 //update route -> to add address and ph no. before ordering
-router.put("/profile", authMiddleware,requireRole(['customer']) , customerController.updateCustomerDetails); 
+router.put("/profile", authMiddleware,requireRole(['customer']) , customerController.updateCustomerDetails);
 
 
 //orders
