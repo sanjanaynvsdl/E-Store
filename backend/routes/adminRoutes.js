@@ -16,8 +16,11 @@ router.post('/riders', adminController.createRiders);
 router.get('/orders', authMiddleware, requireRole(['admin']), adminController.getAllOrders);
 router.get('/orders/:id', authMiddleware, requireRole(['admin']), adminController.getOrderById);
 
-//update order status and assign a rider
-router.put('/orders/:id', authMiddleware, requireRole(['admin']), adminController.updateOrderStatus);
+//to update order_status and assing rider
+router.put('/orders/:id/status', authMiddleware, requireRole(['admin']), adminController.updateOrderStatus);
+router.put('/orders/:id/assign-rider', authMiddleware, requireRole(['admin']), adminController.assignRider);
+
+// Get all riders
 router.get('/riders', authMiddleware, requireRole(['admin']), adminController.getAllRiders);
 
 

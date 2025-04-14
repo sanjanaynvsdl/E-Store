@@ -11,7 +11,7 @@ const riderRoutes = require("./routes/riderRoutes");
 
 const app=express();
 
-console.log("got the request!");
+
 //middlewares
 app.use(cors());
 app.use(express.json());

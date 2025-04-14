@@ -10,6 +10,7 @@ import UnauthorizedPage from "./pages/un-authorized";
 
 //admin-pages
 import Dashboard from "./pages/admin-pages/dashboard";
+import OrderDetailsPage from "./pages/admin-pages/order-details";
 
 //customer-pages
 import ProductsListPage from "./pages/customer-pages/products-list";
@@ -42,6 +43,14 @@ export default function App() {
               <ProtectedRoute allowedRoles={["admin"]}>
                 <AdminLayout>
                   <Dashboard />
+                </AdminLayout>
+              </ProtectedRoute>
+            } />
+
+            <Route path="/admin/orders/:id" element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <AdminLayout>
+                  <OrderDetailsPage />
                 </AdminLayout>
               </ProtectedRoute>
             } />

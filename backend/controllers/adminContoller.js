@@ -128,12 +128,11 @@ const getAllOrders = async (req, res) => {
 
 // get order by ID
 const getOrderById = async (req, res) => {
-
   try {
-
     const order = await Order.findById(req.params.id)
       .populate("user_id", "name email address")
-      .populate("items.product_id");
+      .populate("items.product_id")
+      .populate("rider_id", "name email orderCount");
 
     if (!order) {
       return res.status(404).json({ message: "Order not found" });
@@ -141,7 +140,7 @@ const getOrderById = async (req, res) => {
 
     return res.status(200).json({ 
         message: "Order fetched successfully!", 
-        order:order 
+        order: order 
     });
 
   } catch (error) {
@@ -156,13 +155,45 @@ const getOrderById = async (req, res) => {
 };
 
 
-// update order_status and assign_rider, update order_count 
+// Update order status only
 const updateOrderStatus = async (req, res) => {
-
   try {
+    const orderId = req.params.id;
+    const { status } = req.body;
 
+    if (!status) {
+      return res.status(400).json({ message: "Status is required" });
+    }
+
+    const order = await Order.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true }
+    );
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    return res.status(200).json({
+      message: "Order status updated successfully",
+      order
+    });
+  } catch (error) {
+    console.error("Error updating order status:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// Assign rider to an order
+const assignRider = async (req, res) => {
+  try {
     const orderId = req.params.id;
     const { rider_id } = req.body;
+
+    if (!rider_id) {
+      return res.status(400).json({ message: "Rider ID is required" });
+    }
 
     const rider = await Rider.findById(rider_id);
     if (!rider) {
@@ -171,7 +202,7 @@ const updateOrderStatus = async (req, res) => {
 
     const order = await Order.findByIdAndUpdate(
       orderId,
-      { status: "Shipped", rider_id },
+      { rider_id },
       { new: true }
     );
 
@@ -182,19 +213,14 @@ const updateOrderStatus = async (req, res) => {
     // Update order count of rider
     rider.orderCount = (rider.orderCount || 0) + 1;
     await rider.save();
-
-    return res.status(200).json({ 
-        message: "Order updated and rider assigned successfully!", 
-        order 
+    
+    return res.status(200).json({
+      message: "Rider assigned to order successfully",
+      order
     });
-
   } catch (error) {
-
-    console.error("Internal server error in updating order:", error);
-    return res.status(500).json({ 
-        message: "Internal server error!", 
-        error: error.message 
-    });
+    console.error("Error assigning rider to order:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -229,5 +255,6 @@ module.exports = {
   getAllOrders,
   getOrderById,
   updateOrderStatus,
+  assignRider,
   getAllRiders
 };
