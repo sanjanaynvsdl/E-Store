@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/auth-context";
+import { CartProvider } from "./context/cart-context";
 
 import ProtectedRoute from "./components/protected-route";
 import AdminLayout from "./components/layouts/admin-layout";
@@ -23,7 +24,8 @@ export default function App() {
   return (
     <Router>
       <AuthProvider>
-        <div className="min-h-screen">
+        <CartProvider>
+          <div className="min-h-screen">
           <Routes>
 
             {/* public routes */}
@@ -81,7 +83,8 @@ export default function App() {
             {/* Fallback route */}
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
-        </div>
+          </div>
+        </CartProvider>
       </AuthProvider>
     </Router>
   );
