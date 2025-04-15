@@ -88,7 +88,7 @@ export default function SignIn() {
       </button>
       
       <div className="mt-6 text-center text-sm text-gray-800">
-        <p>Only approved emails can sign in</p>
+        <p>Only approved emails can access admin panel</p>
         <p className="mt-2">Need help? Contact admin <a href="mailto:sanjanayalamarthi@gmail.com" className="text-[#FCA311] hover:underline">sanjanayalamarthi@gmail.com</a></p>
       </div>
       

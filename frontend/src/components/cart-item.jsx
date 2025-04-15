@@ -14,7 +14,7 @@ export default function CartItem({ item, index }) {
   return (
     <div className="flex  py-4">
       {/* Product Image */}
-      <div className="w-20 h-20 flex-shrink-0 bg-light-gray rounded-md overflow-hidden">
+      <div className="w-20 h-20 flex-shrink-0 bg-white rounded-md overflow-hidden">
         <img 
           src={item.imageUrl} 
           alt={item.name} 
