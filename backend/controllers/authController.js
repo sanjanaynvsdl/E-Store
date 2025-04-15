@@ -19,19 +19,30 @@ const userSignIn = async (req, res) => {
         const name = decoded.name;
 
         const approved = await ApprovedEmail.findOne({ email });
-        if (!approved) {
-            return res.status(403).json({ message: "Email not approved" });
-        }
+        // if (!approved) {
+        //     return res.status(403).json({ message: "Email not approved" });
+        // }
 
         let user = await User.findOne({ email });
-        if (!user) {
+
+        if(approved && !user) {
+                user = await User.create({
+                    name,
+                    email,
+                    role:approved.role,
+                    address: {},
+                    phone: ""
+                });
+            
+        } else if (!user){
             user = await User.create({
                 name,
                 email,
-                role: approved.role,
+                role:"customer",
                 address: {},
                 phone: ""
             });
+
         }
 
         const token = createToken({ id: user._id, role: user.role });
