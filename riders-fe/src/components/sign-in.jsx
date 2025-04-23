@@ -54,7 +54,7 @@ export default function SignIn() {
     } catch (error) {
 
       console.error("Sign-in failed:", error);
-      setError("Login failed. Please try again.");
+      setError(error.response?.data?.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
